@@ -163,7 +163,7 @@ class RemoteConfigFetcher:
         if not self.cache:
             raise ValueError("Configuration not loaded. Call initialize() first.")
         
-        address = self.cache.get("topup_addresses", {}).get("alpaca_escrow")
+        address = self.cache.get("topup_addresses", {}).get("cross_chain_access_escrow")
         if not address:
             raise ValueError("Topup address not found in configuration")
         

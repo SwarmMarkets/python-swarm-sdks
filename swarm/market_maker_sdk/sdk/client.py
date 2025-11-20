@@ -6,9 +6,9 @@ from decimal import Decimal
 from datetime import datetime
 import logging
 
-from _shared.models import Network, Quote, TradeResult
-from _shared.swarm_auth import SwarmAuth
-from _shared.config import get_is_dev
+from swarm.shared.models import Network, Quote, TradeResult
+from swarm.shared.swarm_auth import SwarmAuth
+from swarm.shared.config import get_is_dev
 from ..rpq_service import (
     RPQClient,
     QuoteRequest,
@@ -132,7 +132,7 @@ class MarketMakerClient:
             await self.rpq_client.close()
         
         # Close remote config fetcher sessions
-        from _shared.remote_config import close_config_fetchers
+        from swarm.shared.remote_config import close_config_fetchers
         await close_config_fetchers()
         
         logger.info("Market Maker client closed")

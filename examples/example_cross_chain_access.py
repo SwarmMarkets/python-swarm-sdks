@@ -16,8 +16,8 @@ import os
 from decimal import Decimal
 from dotenv import load_dotenv
 
-from cross_chain_access_sdk import CrossChainAccessClient
-from _shared.models import Network
+from swarm.cross_chain_access_sdk import CrossChainAccessClient
+from swarm.shared.models import Network
 
 # Configure logging
 logging.basicConfig(

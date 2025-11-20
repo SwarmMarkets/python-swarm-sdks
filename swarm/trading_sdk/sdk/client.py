@@ -5,11 +5,11 @@ import logging
 from decimal import Decimal
 from typing import Optional
 
-from _shared.models import Network, Quote, TradeResult
-from _shared.swarm_auth import SwarmAuth
-from _shared.config import get_is_dev
-from market_maker_sdk import MarketMakerClient
-from cross_chain_access_sdk import CrossChainAccessClient, MarketClosedException as CrossChainAccessMarketClosedException
+from swarm.shared.models import Network, Quote, TradeResult
+from swarm.shared.swarm_auth import SwarmAuth
+from swarm.shared.config import get_is_dev
+from swarm.market_maker_sdk import MarketMakerClient
+from swarm.cross_chain_access_sdk import CrossChainAccessClient, MarketClosedException as CrossChainAccessMarketClosedException
 from ..routing import Router, RoutingStrategy, PlatformOption
 from ..exceptions import (
     TradingException,
@@ -123,7 +123,7 @@ class TradingClient:
         await self.cross_chain_access_client.close()
         
         # Close remote config fetcher sessions
-        from _shared.remote_config import close_config_fetchers
+        from swarm.shared.remote_config import close_config_fetchers
         await close_config_fetchers()
         
         logger.info("Trading SDK closed")

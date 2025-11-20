@@ -9,18 +9,20 @@ import os
 from decimal import Decimal
 from dotenv import load_dotenv
 
-from trading_sdk import TradingClient, RoutingStrategy
-from trading_sdk.exceptions import NoLiquidityException, AllPlatformsFailedException
-from cross_chain_access_sdk import CrossChainAccessClient
-from cross_chain_access_sdk.cross_chain_access.exceptions import (
+from swarm.trading_sdk import TradingClient, RoutingStrategy
+from swarm.trading_sdk.exceptions import NoLiquidityException, AllPlatformsFailedException
+from swarm.cross_chain_access_sdk import (
+    CrossChainAccessClient,
     MarketClosedException,
     AccountBlockedException,
     InsufficientFundsException,
 )
-from market_maker_sdk import MarketMakerClient
-from market_maker_sdk.rpq_service.exceptions import NoOffersAvailableException
-from _shared.models import Network
-from _shared.web3.exceptions import (
+from swarm.market_maker_sdk import (
+    MarketMakerClient,
+    NoOffersAvailableException,
+)
+from swarm.shared.models import Network
+from swarm.shared.web3.exceptions import (
     InsufficientBalanceException,
     TransactionFailedException,
 )

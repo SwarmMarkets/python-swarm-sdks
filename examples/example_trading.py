@@ -17,8 +17,8 @@ import os
 from decimal import Decimal
 from dotenv import load_dotenv
 
-from trading_sdk import TradingClient, RoutingStrategy
-from _shared.models import Network
+from swarm.trading_sdk import TradingClient, RoutingStrategy
+from swarm.shared.models import Network
 
 # Configure logging
 logging.basicConfig(

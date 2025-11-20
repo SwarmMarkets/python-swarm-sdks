@@ -38,11 +38,17 @@ from .cross_chain_access import (
     CrossChainAccessQuote,
     AccountStatus,
     AccountFunds,
+    CalculatedAmounts,
+    CrossChainAccessTradeParams,
+    CrossChainAccessOrderResponse,
     OrderSide,
     CrossChainAccessException,
     MarketClosedException,
     AccountBlockedException,
     InsufficientFundsException,
+    QuoteUnavailableException,
+    OrderFailedException,
+    InvalidSymbolException,
 )
 from .market_hours import MarketHours
 
@@ -51,18 +57,24 @@ __version__ = "0.1.0"
 __all__ = [
     # Main client
     "CrossChainAccessClient",
-    # API client
+    # API client (internal, but exposed for advanced use)
     "CrossChainAccessAPIClient",
     # Models
     "CrossChainAccessQuote",
     "AccountStatus",
     "AccountFunds",
+    "CalculatedAmounts",
+    "CrossChainAccessTradeParams",
+    "CrossChainAccessOrderResponse",
     "OrderSide",
     # Exceptions
     "CrossChainAccessException",
     "MarketClosedException",
     "AccountBlockedException",
     "InsufficientFundsException",
+    "QuoteUnavailableException",
+    "OrderFailedException",
+    "InvalidSymbolException",
     # Utilities
     "MarketHours",
 ]

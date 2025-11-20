@@ -49,12 +49,20 @@ from .rpq_service import (
     PricingType,
     PercentageType,
     AssetType,
+    RPQServiceException,
+    NoOffersAvailableException,
+    InvalidTokenPairException,
+    QuoteUnavailableException,
+    PriceFeedNotFoundException,
 )
 from .market_maker_web3 import (
     MarketMakerWeb3Client,
     MarketMakerWeb3Exception,
     OfferNotFoundError,
     OfferInactiveError,
+    InsufficientOfferBalanceError,
+    OfferExpiredError,
+    UnauthorizedError,
 )
 
 __version__ = "0.1.0"
@@ -62,7 +70,7 @@ __version__ = "0.1.0"
 __all__ = [
     # Main client
     "MarketMakerClient",
-    # RPQ Service
+    # RPQ Service (internal, but exposed for advanced use)
     "RPQClient",
     "Offer",
     "BestOffersResponse",
@@ -78,9 +86,18 @@ __all__ = [
     "PricingType",
     "PercentageType",
     "AssetType",
-    # Web3
+    # RPQ Exceptions
+    "RPQServiceException",
+    "NoOffersAvailableException",
+    "InvalidTokenPairException",
+    "QuoteUnavailableException",
+    "PriceFeedNotFoundException",
+    # Web3 (internal, but exposed for advanced use)
     "MarketMakerWeb3Client",
     "MarketMakerWeb3Exception",
     "OfferNotFoundError",
     "OfferInactiveError",
+    "InsufficientOfferBalanceError",
+    "OfferExpiredError",
+    "UnauthorizedError",
 ]

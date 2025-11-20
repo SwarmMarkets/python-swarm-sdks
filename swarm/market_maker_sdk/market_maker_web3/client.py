@@ -9,9 +9,9 @@ import logging
 from web3 import Web3
 from web3.exceptions import ContractLogicError
 
-from _shared.web3 import Web3Helper, Web3Exception, TransactionFailedException
-from _shared.models import Network
-from _shared.constants import TOKEN_DECIMALS
+from swarm.shared.web3 import Web3Helper, Web3Exception, TransactionFailedException
+from swarm.shared.models import Network
+from swarm.shared.constants import TOKEN_DECIMALS
 from .constants import MARKET_MAKER_MANAGER_ABI, get_market_maker_manager_address
 from .exceptions import (
     MarketMakerWeb3Exception,

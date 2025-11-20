@@ -5,7 +5,7 @@ from typing import List, Dict, Any, Optional
 from decimal import Decimal
 import logging
 
-from _shared.models import Quote
+from swarm.shared.models import Quote
 
 logger = logging.getLogger(__name__)
 

@@ -80,20 +80,19 @@ Repository = "https://github.com/SwarmMarkets/python-swarm-sdks"
 "Bug Tracker" = "https://github.com/SwarmMarkets/python-swarm-sdks/issues"
 
 [tool.setuptools]
-package-dir = {"" = "libs"}
 include-package-data = true
 zip-safe = false
 
 [tool.setuptools.packages.find]
-where = ["libs"]
+where = ["."]
+include = ["swarm*"]
 exclude = ["tests*", "examples*"]
-include = ["market_maker_sdk*", "cross_chain_access_sdk*", "trading_sdk*", "_shared*"]
 
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = "-ra -q --strict-markers"
 testpaths = ["tests"]
-pythonpath = ["libs"]
+pythonpath = ["."]
 asyncio_mode = "auto"
 
 [tool.black]
@@ -146,7 +145,7 @@ module = "eth_account.*"
 ignore_missing_imports = true
 
 [tool.coverage.run]
-source = ["libs/_shared", "libs/market_maker_sdk", "libs/cross_chain_access_sdk", "libs/trading_sdk"]
+source = ["swarm"]
 omit = [
     "*/tests/*",
     "*/examples/*",

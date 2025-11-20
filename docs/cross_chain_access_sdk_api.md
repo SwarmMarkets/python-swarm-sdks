@@ -595,26 +595,26 @@ async def create_order(
     qty: Decimal,
     notional: Decimal,
     chain_id: int,
-    target_chain_id: int,
     user_email: str,
+    target_chain_id: int = None,
 ) -> Cross-Chain AccessOrderResponse
 ```
 
 **Parameters**:
 
-| Parameter         | Type        | Required | Description                         |
-| ----------------- | ----------- | -------- | ----------------------------------- |
-| `wallet`          | `str`       | ✅       | User wallet address                 |
-| `tx_hash`         | `str`       | ✅       | Blockchain transaction hash         |
-| `asset_address`   | `str`       | ✅       | RWA token contract address          |
-| `asset_symbol`    | `str`       | ✅       | Trading symbol (e.g., `"AAPL"`)     |
-| `side`            | `OrderSide` | ✅       | `OrderSide.BUY` or `OrderSide.SELL` |
-| `price`           | `Decimal`   | ✅       | Locked price per unit               |
-| `qty`             | `Decimal`   | ✅       | RWA quantity                        |
-| `notional`        | `Decimal`   | ✅       | USDC amount                         |
-| `chain_id`        | `int`       | ✅       | Source blockchain network ID        |
-| `target_chain_id` | `int`       | ✅       | Target blockchain network ID        |
-| `user_email`      | `str`       | ✅       | User email for notifications        |
+| Parameter         | Type        | Required | Description                                         |
+| ----------------- | ----------- | -------- | --------------------------------------------------- |
+| `wallet`          | `str`       | ✅       | User wallet address                                 |
+| `tx_hash`         | `str`       | ✅       | Blockchain transaction hash                         |
+| `asset_address`   | `str`       | ✅       | RWA token contract address                          |
+| `asset_symbol`    | `str`       | ✅       | Trading symbol (e.g., `"AAPL"`)                     |
+| `side`            | `OrderSide` | ✅       | `OrderSide.BUY` or `OrderSide.SELL`                 |
+| `price`           | `Decimal`   | ✅       | Locked price per unit                               |
+| `qty`             | `Decimal`   | ✅       | RWA quantity                                        |
+| `notional`        | `Decimal`   | ✅       | USDC amount                                         |
+| `chain_id`        | `int`       | ✅       | Source blockchain network ID                        |
+| `user_email`      | `str`       | ✅       | User email for notifications                        |
+| `target_chain_id` | `int`       | ❌       | Target blockchain network ID (defaults to chain_id) |
 
 **Returns**: `Cross-Chain AccessOrderResponse`
 
@@ -639,6 +639,7 @@ Fields:
 **Example**:
 
 ```python
+# With explicit target_chain_id (cross-chain)
 order = await client.create_order(
     wallet="0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
     tx_hash="0xabc123...",
@@ -649,9 +650,24 @@ order = await client.create_order(
     qty=Decimal("10"),
     notional=Decimal("1505"),
     chain_id=137,
-    target_chain_id=137,
-    user_email="user@example.com"
+    user_email="user@example.com",
+    target_chain_id=56  # Optional: receive assets on different chain
 )
+
+# Without target_chain_id (same chain)
+order = await client.create_order(
+    wallet="0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+    tx_hash="0xabc123...",
+    asset_address="0x1234...",
+    asset_symbol="AAPL",
+    side=OrderSide.BUY,
+    price=Decimal("150.50"),
+    qty=Decimal("10"),
+    notional=Decimal("1505"),
+    chain_id=137,
+    user_email="user@example.com"  # target_chain_id defaults to 137
+)
+
 print(f"Order {order.order_id} created with status: {order.status}")
 ```
 
@@ -808,15 +824,15 @@ Normalized quote format used across all SDKs.
 
 **Fields**:
 
-| Field                | Type       | Description           |
-| -------------------- | ---------- | --------------------- |
-| `sell_token_address` | `str`      | Token being sold      |
-| `sell_amount`        | `Decimal`  | Amount being sold     |
-| `buy_token_address`  | `str`      | Token being bought    |
-| `buy_amount`         | `Decimal`  | Amount being bought   |
-| `rate`               | `Decimal`  | Exchange rate         |
+| Field                | Type       | Description                       |
+| -------------------- | ---------- | --------------------------------- |
+| `sell_token_address` | `str`      | Token being sold                  |
+| `sell_amount`        | `Decimal`  | Amount being sold                 |
+| `buy_token_address`  | `str`      | Token being bought                |
+| `buy_amount`         | `Decimal`  | Amount being bought               |
+| `rate`               | `Decimal`  | Exchange rate                     |
 | `source`             | `str`      | Platform (`"cross_chain_access"`) |
-| `timestamp`          | `datetime` | Quote timestamp       |
+| `timestamp`          | `datetime` | Quote timestamp                   |
 
 ---
 
@@ -828,18 +844,18 @@ Normalized trade result format used across all SDKs.
 
 **Fields**:
 
-| Field                | Type       | Description                 |
-| -------------------- | ---------- | --------------------------- |
-| `tx_hash`            | `str`      | Blockchain transaction hash |
-| `order_id`           | `str`      | Platform order ID           |
-| `sell_token_address` | `str`      | Token sold                  |
-| `sell_amount`        | `Decimal`  | Amount sold                 |
-| `buy_token_address`  | `str`      | Token bought                |
-| `buy_amount`         | `Decimal`  | Amount bought               |
-| `rate`               | `Decimal`  | Exchange rate               |
-| `source`             | `str`      | Platform (`"cross_chain_access"`)       |
-| `timestamp`          | `datetime` | Trade timestamp             |
-| `network`            | `Network`  | Blockchain network          |
+| Field                | Type       | Description                       |
+| -------------------- | ---------- | --------------------------------- |
+| `tx_hash`            | `str`      | Blockchain transaction hash       |
+| `order_id`           | `str`      | Platform order ID                 |
+| `sell_token_address` | `str`      | Token sold                        |
+| `sell_amount`        | `Decimal`  | Amount sold                       |
+| `buy_token_address`  | `str`      | Token bought                      |
+| `buy_amount`         | `Decimal`  | Amount bought                     |
+| `rate`               | `Decimal`  | Exchange rate                     |
+| `source`             | `str`      | Platform (`"cross_chain_access"`) |
+| `timestamp`          | `datetime` | Trade timestamp                   |
+| `network`            | `Network`  | Blockchain network                |
 
 ---
 

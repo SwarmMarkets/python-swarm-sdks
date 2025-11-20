@@ -4,7 +4,7 @@ This example shows how to use the RPQ client with the new API structure.
 """
 
 import asyncio
-from market_maker_sdk.rpq_service import (
+from swarm.market_maker_sdk.rpq_service import (
     RPQClient,
 )
 

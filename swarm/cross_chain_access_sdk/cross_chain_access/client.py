@@ -5,9 +5,9 @@ from datetime import datetime
 from typing import Dict, Any
 from decimal import Decimal
 
-from _shared.base_client import BaseAPIClient, APIException
-from _shared.models import Network
-from _shared.config import get_cross_chain_access_api_url, get_internal_worker_id, get_is_dev
+from swarm.shared.base_client import BaseAPIClient, APIException
+from swarm.shared.models import Network
+from swarm.shared.config import get_cross_chain_access_api_url, get_internal_worker_id, get_is_dev
 from .models import (
     CrossChainAccessQuote,
     AccountStatus,
@@ -204,8 +204,8 @@ class CrossChainAccessAPIClient(BaseAPIClient):
         qty: Decimal,
         notional: Decimal,
         chain_id: int,
-        target_chain_id: int,
         user_email: str,
+        target_chain_id: int = None,
     ) -> CrossChainAccessOrderResponse:
         """Create a trading order on Cross-Chain Access.
 
@@ -222,8 +222,8 @@ class CrossChainAccessAPIClient(BaseAPIClient):
             qty: RWA quantity (for SELL) or quantity to receive (for BUY)
             notional: USDC amount
             chain_id: Blockchain network ID
-            target_chain_id: Blockhain network ID where user will receive asset (optional, by default chain_id will be used)
             user_email: User email for notifications
+            target_chain_id: Blockchain network ID where user will receive asset (optional, defaults to chain_id)
 
         Returns:
             CrossChainAccessOrderResponse with order details
@@ -243,8 +243,8 @@ class CrossChainAccessAPIClient(BaseAPIClient):
             ...     qty=Decimal("10"),
             ...     notional=Decimal("1505"),
             ...     chain_id=137,
-            ...     target_chain_id=56,
-            ...     user_email="user@example.com"
+            ...     user_email="user@example.com",
+            ...     target_chain_id=56  # Optional, defaults to chain_id
             ... )
         """
         if not self.auth_token:

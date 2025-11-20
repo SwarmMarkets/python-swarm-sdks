@@ -18,8 +18,8 @@ import os
 from decimal import Decimal
 from dotenv import load_dotenv
 
-from market_maker_sdk import MarketMakerClient
-from _shared.models import Network
+from swarm.market_maker_sdk import MarketMakerClient
+from swarm.shared.models import Network
 
 # Configure logging
 logging.basicConfig(

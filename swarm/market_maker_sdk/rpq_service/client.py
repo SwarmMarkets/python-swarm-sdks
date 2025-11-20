@@ -5,8 +5,8 @@ from decimal import Decimal
 from datetime import datetime
 import logging
 
-from _shared.base_client import BaseAPIClient, APIException
-from _shared.models import Quote
+from swarm.shared.base_client import BaseAPIClient, APIException
+from swarm.shared.models import Quote
 from .models import (
     Offer,
     BestOffersResponse,

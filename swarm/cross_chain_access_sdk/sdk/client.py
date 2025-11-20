@@ -6,11 +6,11 @@ from decimal import Decimal
 from datetime import datetime
 from typing import Optional
 
-from _shared.models import Network, Quote, TradeResult
-from _shared.swarm_auth import SwarmAuth
-from _shared.web3 import Web3Helper
-from _shared.constants import USDC_ADDRESSES
-from _shared.config import get_is_dev
+from swarm.shared.models import Network, Quote, TradeResult
+from swarm.shared.swarm_auth import SwarmAuth
+from swarm.shared.web3 import Web3Helper
+from swarm.shared.constants import USDC_ADDRESSES
+from swarm.shared.config import get_is_dev
 from ..cross_chain_access import (
     CrossChainAccessAPIClient,
     OrderSide,
@@ -153,8 +153,8 @@ class CrossChainAccessClient:
         This is called during initialization to fetch the address.
         """
         if not self.topup_address:
-            from _shared.remote_config import get_config_fetcher
-            from _shared.config import get_is_dev
+            from swarm.shared.remote_config import get_config_fetcher
+            from swarm.shared.config import get_is_dev
             fetcher = await get_config_fetcher(is_dev=get_is_dev())
             self.topup_address = fetcher.get_topup_address()
             logger.info(f"Topup address loaded: {self.topup_address}")
@@ -165,7 +165,7 @@ class CrossChainAccessClient:
             await self.cross_chain_access_api.close()
         
         # Close remote config fetcher sessions
-        from _shared.remote_config import close_config_fetchers
+        from swarm.shared.remote_config import close_config_fetchers
         await close_config_fetchers()
         
         logger.info("Cross-Chain Access client closed")
@@ -259,6 +259,7 @@ class CrossChainAccessClient:
         user_email: str,
         rwa_amount: Optional[Decimal] = None,
         usdc_amount: Optional[Decimal] = None,
+        target_chain_id: Optional[int] = None,
     ) -> TradeResult:
         """Buy RWA tokens with USDC via Cross-Chain Access stock market.
         
@@ -278,6 +279,7 @@ class CrossChainAccessClient:
             user_email: User email for notifications
             rwa_amount: Amount of RWA tokens to buy (optional, accepts int/float/Decimal)
             usdc_amount: Amount of USDC to spend (optional, accepts int/float/Decimal)
+            target_chain_id: Target blockchain network ID where assets will be received (optional, defaults to source chain_id)
         
         Returns:
             TradeResult with transaction details
@@ -317,6 +319,7 @@ class CrossChainAccessClient:
             usdc_amount=usdc_amount,
             order_side=OrderSide.BUY,
             user_email=user_email,
+            target_chain_id=target_chain_id,
         )
     
     async def sell(
@@ -326,6 +329,7 @@ class CrossChainAccessClient:
         user_email: str,
         rwa_amount: Optional[Decimal] = None,
         usdc_amount: Optional[Decimal] = None,
+        target_chain_id: Optional[int] = None,
     ) -> TradeResult:
         """Sell RWA tokens for USDC via Cross-Chain Access stock market.
         
@@ -345,6 +349,7 @@ class CrossChainAccessClient:
             user_email: User email for notifications
             rwa_amount: Amount of RWA tokens to sell (optional, accepts int/float/Decimal)
             usdc_amount: Amount of USDC to receive (optional, accepts int/float/Decimal)
+            target_chain_id: Target blockchain network ID where assets will be received (optional, defaults to source chain_id)
         
         Returns:
             TradeResult with transaction details
@@ -384,6 +389,7 @@ class CrossChainAccessClient:
             usdc_amount=usdc_amount,
             order_side=OrderSide.SELL,
             user_email=user_email,
+            target_chain_id=target_chain_id,
         )
     
     async def _execute_trade(
@@ -394,6 +400,7 @@ class CrossChainAccessClient:
         usdc_amount: Optional[Decimal],
         order_side: OrderSide,
         user_email: str,
+        target_chain_id: Optional[int] = None,
     ) -> TradeResult:
         """Execute a trade (internal method).
         
@@ -404,6 +411,7 @@ class CrossChainAccessClient:
             usdc_amount: Amount of USDC
             order_side: BUY or SELL
             user_email: User email
+            target_chain_id: Target blockchain network ID (optional)
         
         Returns:
             TradeResult
@@ -511,6 +519,7 @@ class CrossChainAccessClient:
             notional=final_usdc,
             chain_id=self.network.value,
             user_email=user_email,
+            target_chain_id=target_chain_id,
         )
         
         logger.info(f"Order created: {order_response.order_id}")
