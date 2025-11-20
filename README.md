@@ -818,31 +818,29 @@ Style: Code style changes
 
 ## 🌐 Supported Networks
 
-| Network      | Chain ID | Trading SDK | Market Maker SDK | Cross-Chain Access SDK |
-| ------------ | -------- | ----------- | ---------------- | ---------------------- |
-| **Polygon**  | 137      | ✅          | ✅               | ✅                     |
-| **Ethereum** | 1        | ✅          | ✅               | ✅                     |
-| **Arbitrum** | 42161    | ✅          | ✅               | ❌                     |
-| **Base**     | 8453     | ✅          | ✅               | ✅                     |
-| **Optimism** | 10       | ✅          | ✅               | ❌                     |
+All SDKs support the following networks:
 
-_Note: Trading SDK on Arbitrum/Optimism uses Market Maker only (Cross-Chain Access unavailable)_
+| Network      | Chain ID |
+| ------------ | -------- |
+| **Ethereum** | 1        |
+| **Polygon**  | 137      |
+| **Base**     | 8453     |
+| **BSC**      | 56       |
 
 ### Network Configuration
 
-Networks are defined in `shared/models.py`:
+Networks are defined in `swarm/shared/models.py`:
 
 ```python
 from swarm.shared.models import Network
 
-Network.POLYGON    # 137
 Network.ETHEREUM   # 1
-Network.ARBITRUM   # 42161
+Network.POLYGON    # 137
 Network.BASE       # 8453
-Network.OPTIMISM   # 10
+Network.BSC        # 56
 ```
 
-RPC endpoints are configured in `shared/web3/constants.py` and can be overridden with the `rpc_url` parameter.
+RPC endpoints are configured in `swarm/shared/web3/constants.py` and can be overridden with the `rpc_url` parameter when initializing clients.
 
 ---
 
