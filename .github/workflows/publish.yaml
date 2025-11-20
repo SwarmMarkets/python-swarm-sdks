@@ -1,0 +1,44 @@
+name: Publish Python package
+
+on:
+  push:
+    branches:
+      - main      # publish to PyPI
+      - test      # publish to TestPyPI
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install build backend
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install build
+
+      - name: Build package
+        run: python -m build
+
+      # Decide which index (PyPI vs TestPyPI) based on the branch
+      - name: Publish to TestPyPI on 'test' branch
+        if: github.ref == 'refs/heads/test'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN_TEST }}
+          repository-url: https://test.pypi.org/legacy/
+
+      - name: Publish to PyPI on 'main' branch
+        if: github.ref == 'refs/heads/main'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN_PROD }}
