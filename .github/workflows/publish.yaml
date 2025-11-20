@@ -3,8 +3,19 @@ name: Publish Python package
 on:
   push:
     branches:
-      - main      # publish to PyPI
-      - test      # publish to TestPyPI
+      - main # publish to PyPI
+      - test # publish to TestPyPI
+    paths:
+      - "swarm/**"
+      - "pyproject.toml"
+      - "MANIFEST.in"
+      - "Makefile"
+      - "!**/*.md"
+      - "!*.md"
+      - "!docs/**"
+      - "!**/*.example"
+      - "!*.example"
+      - "!.env.example"
 
 jobs:
   build-and-publish:
