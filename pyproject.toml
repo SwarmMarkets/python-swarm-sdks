@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "swarm-collection"
-version = "1.0.0"
+version = "1.0.0b1"
 description = "Unified SDK collection for trading Real World Assets across multiple platforms"
 readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.8"
@@ -74,10 +74,10 @@ test = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/swarmmarkets/swarm-collection"
-Documentation = "https://github.com/swarmmarkets/swarm-collection#readme"
-Repository = "https://github.com/swarmmarkets/swarm-collection"
-"Bug Tracker" = "https://github.com/swarmmarkets/swarm-collection/issues"
+Homepage = "https://github.com/SwarmMarkets/python-swarm-sdks"
+Documentation = "https://github.com/swarmmarkets/swarm-collection"
+Repository = "https://github.com/SwarmMarkets/python-swarm-sdks"
+"Bug Tracker" = "https://github.com/SwarmMarkets/python-swarm-sdks/issues"
 
 [tool.setuptools]
 package-dir = {"" = "libs"}
