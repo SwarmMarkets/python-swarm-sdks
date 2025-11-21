@@ -24,6 +24,8 @@ jobs:
     permissions:
       id-token: write # Required for OIDC authentication
       contents: read
+    environment:
+      name: ${{ github.ref == 'refs/heads/main' && 'release' || 'release-test' }}
 
     steps:
       - name: Check out code
@@ -46,11 +48,9 @@ jobs:
       - name: Publish to TestPyPI on 'test' branch
         if: github.ref == 'refs/heads/test'
         uses: pypa/gh-action-pypi-publish@release/v1
-        environment: release-test
         with:
           repository-url: https://test.pypi.org/legacy/
 
       - name: Publish to PyPI on 'main' branch
         if: github.ref == 'refs/heads/main'
         uses: pypa/gh-action-pypi-publish@release/v1
-        environment: release
