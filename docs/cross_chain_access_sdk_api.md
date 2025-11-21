@@ -238,20 +238,24 @@ async def buy(
     user_email: str,
     rwa_amount: Optional[Decimal] = None,
     usdc_amount: Optional[Decimal] = None,
+    target_chain_id: Optional[int] = None,
 ) -> TradeResult
 ```
 
 **Parameters**:
 
-| Parameter           | Type      | Required | Description                                                |
-| ------------------- | --------- | -------- | ---------------------------------------------------------- |
-| `rwa_token_address` | `str`     | ✅       | RWA token contract address                                 |
-| `rwa_symbol`        | `str`     | ✅       | Trading symbol (e.g., `"AAPL"`)                            |
-| `user_email`        | `str`     | ✅       | User email for notifications                               |
-| `rwa_amount`        | `Decimal` | ⚠️       | Amount of RWA tokens to buy (either this or `usdc_amount`) |
-| `usdc_amount`       | `Decimal` | ⚠️       | Amount of USDC to spend (either this or `rwa_amount`)      |
+| Parameter           | Type      | Required | Description                                                                                           |
+| ------------------- | --------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `rwa_token_address` | `str`     | ✅       | RWA token contract address                                                                            |
+| `rwa_symbol`        | `str`     | ✅       | Trading symbol (e.g., `"AAPL"`)                                                                       |
+| `user_email`        | `str`     | ✅       | User email for notifications                                                                          |
+| `rwa_amount`        | `Decimal` | ⚠️       | Amount of RWA tokens to buy (either this or `usdc_amount`)                                            |
+| `usdc_amount`       | `Decimal` | ⚠️       | Amount of USDC to spend (either this or `rwa_amount`)                                                 |
+| `target_chain_id`   | `int`     | ❌       | Target network ID where assets will be received (defaults to source network). Can be **ANY network**. |
 
 **⚠️ Important**: Provide **either** `rwa_amount` **OR** `usdc_amount`, not both.
+
+**🌐 Cross-Chain Trading**: Use `target_chain_id` to receive assets on **any blockchain network**, not just the 4 source networks (Polygon, Ethereum, BSC, Base). For example, send USDC from Polygon and receive AAPL tokens on Arbitrum.
 
 **Returns**: `TradeResult`
 
@@ -292,7 +296,7 @@ Contains:
 ```python
 from decimal import Decimal
 
-# Buy 10 AAPL shares
+# Buy 10 AAPL shares (same network)
 result = await client.buy(
     rwa_token_address="0x1234...",
     rwa_symbol="AAPL",
@@ -310,6 +314,15 @@ result = await client.buy(
     usdc_amount=Decimal("1000"),  # Spend $1000 USDC
     user_email="user@example.com"
 )
+
+# Cross-chain: Send USDC from Polygon, receive AAPL on Arbitrum
+result = await client.buy(
+    rwa_token_address="0x1234...",
+    rwa_symbol="AAPL",
+    rwa_amount=Decimal("10"),
+    user_email="user@example.com",
+    target_chain_id=42161  # Receive on Arbitrum
+)
 ```
 
 ---
@@ -325,20 +338,24 @@ async def sell(
     user_email: str,
     rwa_amount: Optional[Decimal] = None,
     usdc_amount: Optional[Decimal] = None,
+    target_chain_id: Optional[int] = None,
 ) -> TradeResult
 ```
 
 **Parameters**:
 
-| Parameter           | Type      | Required | Description                                                 |
-| ------------------- | --------- | -------- | ----------------------------------------------------------- |
-| `rwa_token_address` | `str`     | ✅       | RWA token contract address                                  |
-| `rwa_symbol`        | `str`     | ✅       | Trading symbol (e.g., `"AAPL"`)                             |
-| `user_email`        | `str`     | ✅       | User email for notifications                                |
-| `rwa_amount`        | `Decimal` | ⚠️       | Amount of RWA tokens to sell (either this or `usdc_amount`) |
-| `usdc_amount`       | `Decimal` | ⚠️       | Amount of USDC to receive (either this or `rwa_amount`)     |
+| Parameter           | Type      | Required | Description                                                                                         |
+| ------------------- | --------- | -------- | --------------------------------------------------------------------------------------------------- |
+| `rwa_token_address` | `str`     | ✅       | RWA token contract address                                                                          |
+| `rwa_symbol`        | `str`     | ✅       | Trading symbol (e.g., `"AAPL"`)                                                                     |
+| `user_email`        | `str`     | ✅       | User email for notifications                                                                        |
+| `rwa_amount`        | `Decimal` | ⚠️       | Amount of RWA tokens to sell (either this or `usdc_amount`)                                         |
+| `usdc_amount`       | `Decimal` | ⚠️       | Amount of USDC to receive (either this or `rwa_amount`)                                             |
+| `target_chain_id`   | `int`     | ❌       | Target network ID where USDC will be received (defaults to source network). Can be **ANY network**. |
 
 **⚠️ Important**: Provide **either** `rwa_amount` **OR** `usdc_amount`, not both.
+
+**🌐 Cross-Chain Trading**: Use `target_chain_id` to receive USDC on **any blockchain network**, not just the 4 source networks (Polygon, Ethereum, BSC, Base). For example, sell AAPL tokens from Polygon and receive USDC on Optimism.
 
 **Returns**: `TradeResult`
 
@@ -379,7 +396,7 @@ Contains:
 ```python
 from decimal import Decimal
 
-# Sell 5 AAPL shares
+# Sell 5 AAPL shares (same network)
 result = await client.sell(
     rwa_token_address="0x1234...",
     rwa_symbol="AAPL",
@@ -396,6 +413,15 @@ result = await client.sell(
     rwa_symbol="AAPL",
     usdc_amount=Decimal("500"),  # Receive $500 USDC
     user_email="user@example.com"
+)
+
+# Cross-chain: Sell AAPL from Polygon, receive USDC on Optimism
+result = await client.sell(
+    rwa_token_address="0x1234...",
+    rwa_symbol="AAPL",
+    rwa_amount=Decimal("5"),
+    user_email="user@example.com",
+    target_chain_id=10  # Receive USDC on Optimism
 )
 ```
 
@@ -433,6 +459,8 @@ finally:
 **Location**: `cross_chain_access_sdk/cross_chain_access/client.py`
 
 Low-level HTTP client for interacting with Cross-Chain Access Stock Trading API endpoints.
+
+> ⚠️ **Note**: This is a lower-level API client. Most users should use `CrossChainAccessClient.buy()` and `CrossChainAccessClient.sell()` methods instead, which provide a simpler interface with automatic cross-chain support.
 
 ### Constructor
 
@@ -584,6 +612,8 @@ sell_price = quote.get_price_for_side(OrderSide.SELL)  # Returns bid
 
 Create a trading order on Cross-Chain Access after on-chain transfer.
 
+> ⚠️ **Note**: This is an internal method used by `CrossChainAccessClient`. Most users should use `CrossChainAccessClient.buy()` or `CrossChainAccessClient.sell()` instead, which handle the entire trade flow including transfers and order creation.
+
 ```python
 async def create_order(
     wallet: str,
@@ -602,19 +632,19 @@ async def create_order(
 
 **Parameters**:
 
-| Parameter         | Type        | Required | Description                                         |
-| ----------------- | ----------- | -------- | --------------------------------------------------- |
-| `wallet`          | `str`       | ✅       | User wallet address                                 |
-| `tx_hash`         | `str`       | ✅       | Blockchain transaction hash                         |
-| `asset_address`   | `str`       | ✅       | RWA token contract address                          |
-| `asset_symbol`    | `str`       | ✅       | Trading symbol (e.g., `"AAPL"`)                     |
-| `side`            | `OrderSide` | ✅       | `OrderSide.BUY` or `OrderSide.SELL`                 |
-| `price`           | `Decimal`   | ✅       | Locked price per unit                               |
-| `qty`             | `Decimal`   | ✅       | RWA quantity                                        |
-| `notional`        | `Decimal`   | ✅       | USDC amount                                         |
-| `chain_id`        | `int`       | ✅       | Source blockchain network ID                        |
-| `user_email`      | `str`       | ✅       | User email for notifications                        |
-| `target_chain_id` | `int`       | ❌       | Target blockchain network ID (defaults to chain_id) |
+| Parameter         | Type        | Required | Description                                                                   |
+| ----------------- | ----------- | -------- | ----------------------------------------------------------------------------- |
+| `wallet`          | `str`       | ✅       | User wallet address                                                           |
+| `tx_hash`         | `str`       | ✅       | Blockchain transaction hash                                                   |
+| `asset_address`   | `str`       | ✅       | RWA token contract address                                                    |
+| `asset_symbol`    | `str`       | ✅       | Trading symbol (e.g., `"AAPL"`)                                               |
+| `side`            | `OrderSide` | ✅       | `OrderSide.BUY` or `OrderSide.SELL`                                           |
+| `price`           | `Decimal`   | ✅       | Locked price per unit                                                         |
+| `qty`             | `Decimal`   | ✅       | RWA quantity                                                                  |
+| `notional`        | `Decimal`   | ✅       | USDC amount                                                                   |
+| `chain_id`        | `int`       | ✅       | Source blockchain network ID (must be: 137, 1, 56, or 8453)                   |
+| `user_email`      | `str`       | ✅       | User email for notifications                                                  |
+| `target_chain_id` | `int`       | ❌       | Target blockchain network ID - can be **ANY network** (defaults to chain_id). |
 
 **Returns**: `Cross-Chain AccessOrderResponse`
 
@@ -1089,6 +1119,43 @@ Cross-Chain Access SDK works on networks with USDC support:
 - ✅ Base (8453)
 
 USDC addresses are automatically configured per network.
+
+### Cross-Chain Trading
+
+🌐 **Cross-Chain Support**: You can send USDC from any of the **4 networks listed above** (Polygon, Ethereum, BSC, Base), but receive assets on **ANY other network** using the `target_chain_id` parameter in `buy()` or `sell()` methods. This gives you flexibility in choosing where your assets are delivered.
+
+**Example with buy()**:
+
+```python
+# Initialize client on Polygon
+async with CrossChainAccessClient(
+    network=Network.POLYGON,
+    private_key="0x...",
+    user_email="user@example.com"
+) as client:
+    # Send USDC from Polygon, receive AAPL on Arbitrum
+    result = await client.buy(
+        rwa_token_address="0x1234...",
+        rwa_symbol="AAPL",
+        rwa_amount=Decimal("10"),
+        user_email="user@example.com",
+        target_chain_id=42161  # Receive on Arbitrum
+    )
+    print(f"Bought on Arbitrum! TX: {result.tx_hash}")
+```
+
+**Example with sell()**:
+
+```python
+# Sell AAPL from Polygon, receive USDC on Optimism
+result = await client.sell(
+    rwa_token_address="0x1234...",
+    rwa_symbol="AAPL",
+    rwa_amount=Decimal("5"),
+    user_email="user@example.com",
+    target_chain_id=10  # Receive USDC on Optimism
+)
+```
 
 ---
 

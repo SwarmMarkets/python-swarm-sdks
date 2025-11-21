@@ -424,10 +424,6 @@ make format          # Format code with black & isort
 make lint            # Run flake8 & mypy
 make clean           # Remove build artifacts and cache
 
-# Testing
-make test            # Run pytest
-make test-cov        # Run tests with coverage report (HTML)
-
 # Building
 make build           # Build distribution packages (sdist, wheel)
 
@@ -640,85 +636,6 @@ python examples/example_trading.py
 
 ---
 
-## 🧪 Testing
-
-### Running Tests
-
-The project uses pytest for testing:
-
-```bash
-# Run all tests
-make test
-
-# Run with coverage report (generates HTML report in htmlcov/)
-make test-cov
-
-# Run tests directly with pytest
-pytest -v
-
-# Run specific test file
-pytest tests/test_routing.py -v
-
-# Run specific test
-pytest tests/test_routing.py::test_best_price_strategy -v
-```
-
-### Test Configuration
-
-Test configuration is defined in `pyproject.toml`:
-
-```toml
-[tool.pytest.ini_options]
-minversion = "7.0"
-addopts = "-ra -q --strict-markers"
-testpaths = ["tests"]
-pythonpath = ["."]
-asyncio_mode = "auto"
-```
-
-### Coverage Reports
-
-After running `make test-cov`, coverage reports are available:
-
-- **Terminal**: Summary printed to console
-- **HTML**: Open `htmlcov/index.html` in browser for detailed view
-
-```bash
-# Generate and view coverage report
-make test-cov
-open htmlcov/index.html  # macOS
-xdg-open htmlcov/index.html  # Linux
-start htmlcov/index.html  # Windows
-```
-
-### Test Structure
-
-```
-tests/
-├── test_routing.py           # Trading SDK routing tests
-├── test_market_maker.py      # Market Maker SDK tests
-├── test_cross_chain_access.py       # Cross-Chain Access SDK tests
-├── test_shared.py            # Shared utilities tests
-└── conftest.py               # Pytest fixtures
-```
-
-### Writing Tests
-
-Tests use pytest-asyncio for async support:
-
-```python
-import pytest
-from decimal import Decimal
-
-@pytest.mark.asyncio
-async def test_trading_client():
-    async with TradingClient(...) as client:
-        result = await client.get_quote(...)
-        assert result.rate > 0
-```
-
----
-
 ## 🤝 Contributing
 
 We welcome contributions! Here's how to get started:
@@ -780,7 +697,6 @@ We welcome contributions! Here's how to get started:
 - **Import Sorting**: isort
 - **Linting**: flake8
 - **Type Hints**: mypy
-- **Testing**: pytest with >80% coverage
 
 ### Commit Message Convention
 
@@ -925,7 +841,7 @@ limitations under the License.
 
 ## 💬 Support
 
-- 📚 **Documentation**: [docs/README.md](docs/README.md)
+- 📚 **Documentation**: [docs/](docs/)
 - 💡 **Examples**: [examples/](examples/)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/SwarmMarkets/python-swarm-sdks/issues)
 - 📧 **Email**: developers@swarm.com
@@ -940,4 +856,4 @@ Built by the Swarm Markets team using Web3.py, httpx, and pytest.
 
 **Made with ❤️ by Swarm Markets**
 
-_Last Updated: November 20, 2025_
+_Last Updated: November 21, 2025_

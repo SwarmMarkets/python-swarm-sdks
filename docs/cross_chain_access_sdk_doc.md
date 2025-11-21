@@ -89,10 +89,12 @@ The Cross-Chain Access SDK works on multiple blockchain networks. All trading is
 | BSC      | 56       | BNB       |
 | Base     | 8453     | ETH       |
 
+> 🌐 **Cross-Chain Support**: You can send USDC from any of the **4 networks listed above**, but receive assets on **ANY other network** using the `target_chain_id` parameter. This means you have flexibility in choosing where your purchased assets are delivered.
+
 ### Important Notes
 
 - **USDC Only**: All trades must be in USDC. We automatically detect the correct USDC address for your network.
-- **Cross-Chain**: You can receive assets on a different chain than where you send USDC (see [Cross-Chain Trading](#cross-chain-trading))
+- **Cross-Chain**: You can receive assets on a different chain than where you send USDC (see [Cross-Chain Trading](#cross-chain-trading)). Cross-chain functionality is available on **all supported networks** - trade from any network to any network!
 - **Gas Fees**: Make sure you have enough gas tokens (MATIC, ETH, etc.) for transactions
 
 ---
@@ -303,7 +305,7 @@ The process is similar to buying:
 
 ### Cross-Chain Trading
 
-Want to send USDC from Polygon but receive shares on Base? We support that!
+Want to send USDC from Polygon but receive shares on Base? We support that! Cross-chain functionality is **available on all supported networks** (Polygon, Ethereum, BSC, Base) - you can send from any network and receive on any other network.
 
 #### How It Works
 
@@ -322,6 +324,9 @@ async with CrossChainAccessClient(
         user_email="you@example.com",
         target_chain_id=8453              # Receive on Base!
     )
+
+    # Works from ANY network to ANY network:
+    # Polygon → Ethereum, Ethereum → BSC, BSC → Base, etc.
 ```
 
 ---
