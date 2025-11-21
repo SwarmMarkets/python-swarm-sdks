@@ -644,7 +644,7 @@ if __name__ == "__main__":
 
 For detailed technical documentation of all methods, parameters, and return types, see:
 
-📚 **[Cross-Chain Access SDK API Reference](./cross_chain_access_sdk_api.md)**
+📚 **[Cross-Chain Access SDK API Reference](./cross_chain_access_sdk_references.md)**
 
 The API reference includes:
 
@@ -660,7 +660,7 @@ The API reference includes:
 
 ### Resources
 
-- 📖 **API Reference**: [cross_chain_access_sdk_api.md](./cross_chain_access_sdk_api.md)
+- 📖 **API Reference**: [cross_chain_access_sdk_references.md](./cross_chain_access_sdk_references.md)
 - 🌐 **Platform**: [https://dotc.eth.limo/](https://dotc.eth.limo/)
 - 💬 **Support**: Contact us through the platform
 - 🐛 **Issues**: Report bugs on GitHub

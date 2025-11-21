@@ -852,7 +852,7 @@ Do you want automatic best price?
 
 For detailed technical documentation of all methods, parameters, and return types, see:
 
-📚 **[Trading SDK API Reference](./trading_sdk_api.md)**
+📚 **[Trading SDK API Reference](./trading_sdk_references.md)**
 
 The API reference includes:
 
@@ -869,7 +869,7 @@ The API reference includes:
 
 ### Resources
 
-- 📖 **API Reference**: [trading_sdk_api.md](./trading_sdk_api.md)
+- 📖 **API Reference**: [trading_sdk_references.md](./trading_sdk_references.md)
 - 📚 **Market Maker SDK Docs**: [market_maker_sdk_doc.md](./market_maker_sdk_doc.md)
 - 📚 **Cross-Chain Access SDK Docs**: [cross_chain_access_sdk_doc.md](./cross_chain_access_sdk_doc.md)
 - 💬 **Support**: Contact us through the platform

@@ -719,7 +719,7 @@ if __name__ == "__main__":
 
 For detailed technical documentation of all methods, parameters, and return types, see:
 
-📚 **[Market Maker SDK API Reference](./market_maker_sdk_api.md)**
+📚 **[Market Maker SDK API Reference](./market_maker_sdk_references.md)**
 
 The API reference includes:
 
@@ -735,7 +735,7 @@ The API reference includes:
 
 ### Resources
 
-- 📖 **API Reference**: [market_maker_sdk_api.md](./market_maker_sdk_api.md)
+- 📖 **API Reference**: [market_maker_sdk_references.md](./market_maker_sdk_references.md)
 - 🔧 **Migration Guide**: See `rpq_service/MIGRATION_GUIDE.md` for API changes
 - 💬 **Support**: Contact us through the platform
 - 🐛 **Issues**: Report bugs on GitHub

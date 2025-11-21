@@ -243,7 +243,7 @@ async with TradingClient(
 
 **Key Features**: 5 routing strategies, real-time price comparison, automatic fallback, unified API
 
-📖 [User Guide](docs/trading_sdk_doc.md) | [API Reference](docs/trading_sdk_api.md)
+📖 [User Guide](docs/trading_sdk_doc.md) | [API Reference](docs/trading_sdk_references.md)
 
 ---
 
@@ -255,7 +255,7 @@ async with TradingClient(
 
 **Key Features**: P2P execution, create/manage offers, fixed & dynamic pricing, no KYC required
 
-📖 [User Guide](docs/market_maker_sdk_doc.md) | [API Reference](docs/market_maker_sdk_api.md)
+📖 [User Guide](docs/market_maker_sdk_doc.md) | [API Reference](docs/market_maker_sdk_references.md)
 
 ---
 
@@ -269,7 +269,7 @@ async with TradingClient(
 
 ⚠️ **Requires**: KYC verification at [https://dotc.eth.limo/](https://dotc.eth.limo/)
 
-📖 [User Guide](docs/cross_chain_access_sdk_doc.md) | [API Reference](docs/cross_chain_access_sdk_api.md)
+📖 [User Guide](docs/cross_chain_access_sdk_doc.md) | [API Reference](docs/cross_chain_access_sdk_references.md)
 
 ---
 
@@ -332,11 +332,11 @@ python-swarm-sdks/
 ├── docs/                          # Documentation
 │   ├── README.md                  # Documentation index
 │   ├── trading_sdk_doc.md         # Trading SDK user guide
-│   ├── trading_sdk_api.md         # Trading SDK API reference
+│   ├── trading_sdk_references.md         # Trading SDK API reference
 │   ├── market_maker_sdk_doc.md    # Market Maker SDK user guide
-│   ├── market_maker_sdk_api.md    # Market Maker SDK API reference
+│   ├── market_maker_sdk_references.md    # Market Maker SDK API reference
 │   ├── cross_chain_access_sdk_doc.md     # Cross-Chain Access SDK user guide
-│   └── cross_chain_access_sdk_api.md     # Cross-Chain Access SDK API reference
+│   └── cross_chain_access_sdk_references.md     # Cross-Chain Access SDK API reference
 │
 ├── .github/                       # GitHub configuration
 │   ├── workflows/
@@ -587,9 +587,9 @@ The project includes comprehensive documentation in the `docs/` directory:
 
 #### API References (Technical)
 
-- [**Trading SDK API Reference**](docs/trading_sdk_api.md) - Detailed method specifications
-- [**Market Maker SDK API Reference**](docs/market_maker_sdk_api.md) - RPQ and Web3 client APIs
-- [**Cross-Chain Access SDK API Reference**](docs/cross_chain_access_sdk_api.md) - API client specifications
+- [**Trading SDK API Reference**](docs/trading_sdk_references.md) - Detailed method specifications
+- [**Market Maker SDK API Reference**](docs/market_maker_sdk_references.md) - RPQ and Web3 client APIs
+- [**Cross-Chain Access SDK API Reference**](docs/cross_chain_access_sdk_references.md) - API client specifications
 
 #### Examples
 
