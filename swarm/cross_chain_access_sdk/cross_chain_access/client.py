@@ -7,7 +7,7 @@ from decimal import Decimal
 
 from swarm.shared.base_client import BaseAPIClient, APIException
 from swarm.shared.models import Network
-from swarm.shared.config import get_cross_chain_access_api_url, get_internal_worker_id, get_is_dev
+from swarm.shared.config import get_cross_chain_access_api_url, get_is_dev
 from .models import (
     CrossChainAccessQuote,
     AccountStatus,

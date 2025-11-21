@@ -10,7 +10,7 @@ from eth_account.messages import encode_defunct
 from eth_account.signers.local import LocalAccount
 
 from .base_client import BaseAPIClient, APIException
-from .config import get_swarm_auth_url, get_internal_worker_id
+from .config import get_swarm_auth_url
 
 logger = logging.getLogger(__name__)
 

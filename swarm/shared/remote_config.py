@@ -8,7 +8,6 @@ Configuration includes:
 - Market Maker Manager contract addresses
 """
 
-import json
 import asyncio
 import logging
 from typing import Optional, Dict, Any
@@ -56,8 +55,8 @@ class RemoteConfigFetcher:
         self._session: Optional[aiohttp.ClientSession] = None
         
         # Remote URLs
-        dev_url = "https://trading-configurations.swarm.com/config.dev.json"
-        prod_url = "https://trading-configurations.swarm.com/config.prod.json"
+        dev_url = "https://swarm-sdk-configurations.s3.eu-central-1.amazonaws.com/config.dev.json"
+        prod_url = "https://swarm-sdk-configurations.s3.eu-central-1.amazonaws.com/config.prod.json"
         self.config_url = dev_url if is_dev else prod_url
         
         logger.info(

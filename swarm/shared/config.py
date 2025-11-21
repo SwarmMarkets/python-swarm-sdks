@@ -133,16 +133,6 @@ async def get_dotc_manager_address(chain_id: int) -> str:
     fetcher = await get_config_fetcher(is_dev=get_is_dev())
     return fetcher.get_dotc_manager_address(chain_id)
 
-
-def get_internal_worker_id() -> str:
-    """Get internal worker ID for API headers.
-    
-    Returns:
-        Worker ID string
-    """
-    return "d36195a5-f707-4a4a-a453-1d1d01aafd3b"
-
-
 # Environment info (for debugging/logging)
 async def get_environment_info() -> Dict[str, str]:
     """Get current environment configuration.
