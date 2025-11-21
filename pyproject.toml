@@ -75,7 +75,7 @@ test = [
 
 [project.urls]
 Homepage = "https://github.com/SwarmMarkets/python-swarm-sdks"
-Documentation = "https://github.com/swarmmarkets/swarm-collection"
+Documentation = "https://github.com/SwarmMarkets/python-swarm-sdks/docs"
 Repository = "https://github.com/SwarmMarkets/python-swarm-sdks"
 "Bug Tracker" = "https://github.com/SwarmMarkets/python-swarm-sdks/issues"
 
