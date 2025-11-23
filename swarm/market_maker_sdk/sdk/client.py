@@ -9,11 +9,11 @@ import logging
 from swarm.shared.models import Network, Quote, TradeResult
 from swarm.shared.swarm_auth import SwarmAuth
 from swarm.shared.config import get_is_dev
+from swarm.shared.remote_config import close_config_fetchers
 from ..rpq_service import (
     RPQClient,
-    QuoteRequest,
-    OfferType,
     NoOffersAvailableException,
+    PricingType,
 )
 from ..market_maker_web3 import MarketMakerWeb3Client, MarketMakerWeb3Exception
 
@@ -132,7 +132,6 @@ class MarketMakerClient:
             await self.rpq_client.close()
         
         # Close remote config fetcher sessions
-        from swarm.shared.remote_config import close_config_fetchers
         await close_config_fetchers()
         
         logger.info("Market Maker client closed")
@@ -260,8 +259,6 @@ class MarketMakerClient:
             withdrawal_amount_paid_normalized = withdrawal_amount_paid_wei / Decimal(10 ** withdrawal_decimals)
             
             # Step 2: Execute trade on-chain based on pricing type
-            from ..rpq_service import PricingType
-            
             if selected_offer.pricing_type == PricingType.DYNAMIC_PRICING:
                 # For dynamic offers, use depositToWithdrawalRate from SelectedOffer for slippage protection
                 if not selected_offer.deposit_to_withdrawal_rate:

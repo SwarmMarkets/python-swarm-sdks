@@ -390,7 +390,7 @@ class MarketMakerWeb3Client:
             )
             
             # Extract offer ID from transaction receipt
-            receipt = self.web3_helper.w3.eth.get_transaction_receipt(tx_hash)
+            receipt = await self.web3_helper.w3.eth.get_transaction_receipt(tx_hash)
             
             # Parse logs to get offer ID (simplified - assumes first log contains it)
             # In production, you'd parse the specific event
@@ -482,7 +482,7 @@ class MarketMakerWeb3Client:
             else:
                 offer_id_int = int(offer_id)
             
-            result = self.contract.functions.getOffer(offer_id_int).call()
+            result = await self.contract.functions.getOffer(offer_id_int).call()
             
             return {
                 "maker": result[0],
@@ -517,7 +517,7 @@ class MarketMakerWeb3Client:
             Transaction hash if approval was needed, None otherwise
         """
         # Check current allowance
-        current_allowance = self.web3_helper.get_allowance(
+        current_allowance = await self.web3_helper.get_allowance(
             token_address=token_address,
             spender=spender,
         )
@@ -533,7 +533,7 @@ class MarketMakerWeb3Client:
             f"Approving {spender} to spend {amount} of {token_address}"
         )
         
-        tx_hash = self.web3_helper.approve_token(
+        tx_hash = await self.web3_helper.approve_token(
             token_address=token_address,
             spender=spender,
             amount=amount,
@@ -572,28 +572,30 @@ class MarketMakerWeb3Client:
                 function_call = contract_function(**kwargs)
             
             # Build transaction
-            tx = function_call.build_transaction({
+            nonce = await self.web3_helper.w3.eth.get_transaction_count(
+                self.account.address
+            )
+            gas_price = await self.web3_helper.w3.eth.gas_price
+            
+            tx = await function_call.build_transaction({
                 "from": self.account.address,
-                "nonce": self.web3_helper.w3.eth.get_transaction_count(
-                    self.account.address
-                ),
+                "nonce": nonce,
                 "gas": 0,  # Will be estimated
-                "gasPrice": self.web3_helper.w3.eth.gas_price,
+                "gasPrice": gas_price,
             })
             
             # Estimate gas
-            estimated_gas = self.web3_helper.w3.eth.estimate_gas(tx)
+            estimated_gas = await self.web3_helper.w3.eth.estimate_gas(tx)
             tx["gas"] = int(estimated_gas * 1.2)  # 20% buffer
             
             # Sign and send
             signed_tx = self.account.sign_transaction(tx)
-            tx_hash = self.web3_helper.w3.eth.send_raw_transaction(
+            tx_hash = await self.web3_helper.w3.eth.send_raw_transaction(
                 signed_tx.raw_transaction
             )
-            print(f"tx_hash {tx_hash}")
             
             # Wait for confirmation
-            receipt = self.web3_helper.w3.eth.wait_for_transaction_receipt(
+            receipt = await self.web3_helper.w3.eth.wait_for_transaction_receipt(
                 tx_hash, timeout=300
             )
             

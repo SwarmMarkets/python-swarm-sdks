@@ -4,6 +4,9 @@ Contract addresses are now fetched from remote configuration.
 Use get_market_maker_manager_address() to retrieve addresses dynamically.
 """
 
+import os
+from swarm.shared.remote_config import get_config_fetcher
+
 
 # Market Maker Manager contract ABI (simplified - only methods we need)
 MARKET_MAKER_MANAGER_ABI = [
@@ -93,9 +96,7 @@ async def get_market_maker_manager_address(chain_id: int) -> str:
     Raises:
         ValueError: If address not found for chain
     """
-    from swarm.shared.remote_config import get_config_fetcher
     # Determine if dev mode based on environment
-    import os
     is_dev = os.getenv("SWARM_COLLECTION_MODE", "prod").lower() == "dev"
     fetcher = await get_config_fetcher(is_dev=is_dev)
     return fetcher.get_market_maker_manager_address(chain_id)

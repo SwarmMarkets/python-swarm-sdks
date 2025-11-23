@@ -2,7 +2,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
-[![Package Version](https://img.shields.io/badge/version-1.0.0b1-orange.svg)](https://pypi.org/project/swarm-collection/)
+[![Package Version](https://img.shields.io/badge/version-1.0.0b4-orange.svg)](https://pypi.org/project/swarm-collection/)
 
 > **Unified Python SDK collection for trading Real World Assets (RWAs) across multiple platforms with smart routing, automatic fallback, and price optimization.**
 
@@ -855,5 +855,3 @@ Built by the Swarm Markets team using Web3.py, httpx, and pytest.
 ---
 
 **Made with ❤️ by Swarm Markets**
-
-_Last Updated: November 21, 2025_

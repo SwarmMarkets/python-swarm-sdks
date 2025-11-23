@@ -11,6 +11,7 @@ from swarm.shared.swarm_auth import SwarmAuth
 from swarm.shared.web3 import Web3Helper
 from swarm.shared.constants import USDC_ADDRESSES
 from swarm.shared.config import get_is_dev
+from swarm.shared.remote_config import get_config_fetcher, close_config_fetchers
 from ..cross_chain_access import (
     CrossChainAccessAPIClient,
     OrderSide,
@@ -153,8 +154,6 @@ class CrossChainAccessClient:
         This is called during initialization to fetch the address.
         """
         if not self.topup_address:
-            from swarm.shared.remote_config import get_config_fetcher
-            from swarm.shared.config import get_is_dev
             fetcher = await get_config_fetcher(is_dev=get_is_dev())
             self.topup_address = fetcher.get_topup_address()
             logger.info(f"Topup address loaded: {self.topup_address}")
@@ -165,7 +164,6 @@ class CrossChainAccessClient:
             await self.cross_chain_access_api.close()
         
         # Close remote config fetcher sessions
-        from swarm.shared.remote_config import close_config_fetchers
         await close_config_fetchers()
         
         logger.info("Cross-Chain Access client closed")
@@ -480,7 +478,7 @@ class CrossChainAccessClient:
             transfer_amount = final_usdc
         else:  # SELL
             # Check RWA balance
-            rwa_balance = self.web3_helper.get_balance(rwa_token_address)
+            rwa_balance = await self.web3_helper.get_balance(rwa_token_address)
             if rwa_balance < final_rwa:
                 raise InsufficientFundsException(
                     f"Insufficient RWA balance: need {final_rwa}, "
@@ -499,7 +497,7 @@ class CrossChainAccessClient:
         logger.info(
             f"Transferring {transfer_amount} tokens to {self.topup_address}"
         )
-        tx_hash = self.web3_helper.transfer_token(
+        tx_hash = await self.web3_helper.transfer_token(
             to_address=self.topup_address,
             token_address=transfer_token,
             amount=transfer_amount,

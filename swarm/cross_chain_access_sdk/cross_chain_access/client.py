@@ -1,12 +1,11 @@
 """Cross-Chain Access Stock Trading API client."""
 
+import json
 import logging
 from datetime import datetime
-from typing import Dict, Any
 from decimal import Decimal
 
 from swarm.shared.base_client import BaseAPIClient, APIException
-from swarm.shared.models import Network
 from swarm.shared.config import get_cross_chain_access_api_url, get_is_dev
 from .models import (
     CrossChainAccessQuote,
@@ -271,8 +270,6 @@ class CrossChainAccessAPIClient(BaseAPIClient):
                     }
                 }
             }
-            
-            import json
             
             logger.info(
                 f"Creating {side.value} order for {qty} {asset_symbol} "

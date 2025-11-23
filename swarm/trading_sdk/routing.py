@@ -1,11 +1,12 @@
 """Trading platform routing strategies."""
 
 from enum import Enum
-from typing import List, Dict, Any, Optional
+from typing import Optional
 from decimal import Decimal
 import logging
 
 from swarm.shared.models import Quote
+from .exceptions import NoLiquidityException
 
 logger = logging.getLogger(__name__)
 
@@ -97,7 +98,6 @@ class Router:
             if market_maker_option.error:
                 errors.append(f"Market Maker: {market_maker_option.error}")
             
-            from .exceptions import NoLiquidityException
             raise NoLiquidityException(
                 f"No platforms available. {'; '.join(errors)}"
             )
@@ -105,7 +105,6 @@ class Router:
         # Strategy: CROSS_CHAIN_ACCESS_ONLY
         if strategy == RoutingStrategy.CROSS_CHAIN_ACCESS_ONLY:
             if not cross_chain_access_available:
-                from .exceptions import NoLiquidityException
                 raise NoLiquidityException(
                     f"Cross-Chain Access not available: {cross_chain_access_option.error}"
                 )
@@ -115,7 +114,6 @@ class Router:
         # Strategy: MARKET_MAKER_ONLY
         if strategy == RoutingStrategy.MARKET_MAKER_ONLY:
             if not market_maker_available:
-                from .exceptions import NoLiquidityException
                 raise NoLiquidityException(
                     f"Market Maker not available: {market_maker_option.error}"
                 )

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "swarm-collection"
-version = "1.0.0b3"
+version = "1.0.0b4"
 description = "Unified SDK collection for trading Real World Assets across multiple platforms"
 readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.8"
