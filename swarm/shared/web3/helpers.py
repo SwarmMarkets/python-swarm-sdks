@@ -4,18 +4,7 @@ import logging
 from decimal import Decimal
 from typing import Dict, Any, Optional
 from web3 import AsyncWeb3
-
-try:
-    from web3.middleware import async_geth_poa_middleware
-except ImportError:
-    # For newer versions of web3.py
-    try:
-        from web3.middleware import async_construct_poa_middleware
-        async_geth_poa_middleware = async_construct_poa_middleware
-    except ImportError:
-        # Fallback for older versions
-        from web3.middleware import geth_poa_middleware
-        async_geth_poa_middleware = geth_poa_middleware
+from web3.middleware import ExtraDataToPOAMiddleware
 
 from eth_account import Account
 from eth_account.signers.local import LocalAccount
@@ -74,7 +63,7 @@ class Web3Helper:
         
         # Add PoA middleware for certain chains
         if network in POA_NETWORKS:
-            self.w3.middleware_onion.inject(async_geth_poa_middleware, layer=0)
+            self.w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
         
         # Initialize account
         self.account: LocalAccount = Account.from_key(private_key)
