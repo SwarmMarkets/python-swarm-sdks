@@ -10,6 +10,7 @@
 
 ## 📋 Table of Contents
 
+- [See Real Examples](#-see-real-examples)
 - [Overview](#-overview)
 - [SDK Architecture](#-sdk-architecture)
 - [Key Features](#-key-features)
@@ -20,10 +21,24 @@
 - [Development Setup](#-development-setup)
 - [Deployment & CI/CD](#-deployment--cicd)
 - [Documentation](#-documentation)
-- [Examples](#-examples)
-- [Testing](#-testing)
 - [Contributing](#-contributing)
 - [License](#-license)
+
+---
+
+## 💡 See Real Examples
+
+**Ready-to-run code examples** are available in a separate repository with complete setup instructions and usage demonstrations for all SDKs.
+
+🔗 **[View Examples Repository](https://github.com/SwarmMarkets/python-swarm-sdks-examples)**
+
+The examples repository includes:
+
+- **Trading SDK Examples** - Smart routing, price comparison, and multi-platform trading
+- **Market Maker SDK Examples** - P2P trading, offer creation, and liquidity provision
+- **Cross-Chain Access SDK Examples** - Stock market integration and trading
+- **Error Handling Examples** - Best practices for exception handling
+- **Complete Setup Guide** - Environment configuration and troubleshooting
 
 ---
 
@@ -134,12 +149,13 @@ from swarm.trading_sdk import TradingClient
 from swarm.shared.models import Network
 ```
 
-For detailed usage examples and code samples, see:
+For detailed usage examples and code samples, see the **[Examples Repository](https://github.com/SwarmMarkets/python-swarm-sdks-examples)**.
+
+For SDK documentation, see:
 
 - [Trading SDK Documentation](docs/trading_sdk_doc.md)
 - [Market Maker SDK Documentation](docs/market_maker_sdk_doc.md)
 - [Cross-Chain Access SDK Documentation](docs/cross_chain_access_sdk_doc.md)
-- [Examples Directory](examples/)
 
 ---
 
@@ -176,41 +192,9 @@ pip install -e ".[dev]"
 
 ### Environment Configuration
 
-⚠️ **Important**: The `.env` file is **only required for running the examples**, not for using the SDKs in your own projects. When integrating the SDKs into your application, pass credentials directly to the client constructors.
+⚠️ **Important**: The SDKs do not require a `.env` file. When integrating the SDKs into your application, pass credentials directly to the client constructors.
 
-#### For Running Examples Only
-
-If you want to run the provided examples, create a `.env` file in the project root:
-
-```bash
-# Copy the example file
-cp .env.example .env
-```
-
-Then configure your environment variables in the `.env` file:
-
-```bash
-# Required: Your wallet private key (with 0x prefix)
-PRIVATE_KEY=0x1234567890123456789012345678901234567890123456789012345678901234
-
-# Required for Cross-Chain Access SDK and Trading SDK
-USER_EMAIL=your@email.com
-
-# Required for Market Maker SDK and Trading SDK
-RPQ_API_KEY=your-rpq-api-key-here
-
-# Optional: Environment mode (dev or prod, defaults to prod)
-SWARM_COLLECTION_MODE=prod
-
-# Optional: Custom RPC endpoint
-# RPC_URL=https://polygon-rpc.com
-
-# Optional: Remote configuration URLs (for dynamic config loading)
-# SWARM_CONFIG_PROD_URL=https://your-storage.com/config.prod.json
-# SWARM_CONFIG_DEV_URL=https://your-storage.com/config.dev.json
-```
-
-#### For SDK Integration in Your Projects
+#### SDK Integration in Your Projects
 
 When using the SDKs in your own code, pass credentials directly to the client:
 
@@ -229,7 +213,9 @@ async with TradingClient(
     pass
 ```
 
-⚠️ **Security Note**: Never commit your `.env` file or private keys to version control!
+For working code examples with full setup instructions, visit the **[Examples Repository](https://github.com/SwarmMarkets/python-swarm-sdks-examples)**.
+
+⚠️ **Security Note**: Never commit your private keys to version control!
 
 ---
 
@@ -322,13 +308,6 @@ python-swarm-sdks/
 │           ├── constants.py       # Network configs, ABIs
 │           └── exceptions.py     # Web3 exceptions
 │
-├── examples/                      # Usage examples
-│   ├── example_trading.py         # Trading SDK demo
-│   ├── example_market_maker.py    # Market Maker SDK demo
-│   ├── example_cross_chain_access.py  # Cross-Chain Access SDK demo
-│   ├── example_error_handling.py  # Error handling patterns
-│   └── README.md                  # Examples documentation
-│
 ├── docs/                          # Documentation
 │   ├── README.md                  # Documentation index
 │   ├── trading_sdk_doc.md         # Trading SDK user guide
@@ -349,7 +328,6 @@ python-swarm-sdks/
 ├── Makefile                       # Development commands
 ├── MANIFEST.in                    # Package manifest
 ├── LICENSE                        # Apache 2.0 license
-├── .env.example                   # Environment variables template
 ├── .gitignore                     # Git ignore rules
 └── README.md                      # This file
 ```
@@ -362,7 +340,6 @@ python-swarm-sdks/
 | `swarm/market_maker_sdk/`       | P2P on-chain trading implementation         |
 | `swarm/cross_chain_access_sdk/` | Stock market API integration                |
 | `swarm/shared/`                 | Common utilities used by all SDKs           |
-| `examples/`                     | Complete working examples for each SDK      |
 | `docs/`                         | User guides and API references              |
 | `.github/workflows/`            | CI/CD pipelines and automation              |
 
@@ -430,12 +407,6 @@ make build           # Build distribution packages (sdist, wheel)
 # Publishing
 make upload          # Upload to PyPI (production)
 make upload-test     # Upload to TestPyPI (testing)
-
-# Running Examples
-make example-trading              # Run Trading SDK example
-make example-market-maker         # Run Market Maker SDK example
-make example-cross-chain-access   # Run Cross-Chain Access SDK example
-make example-errors               # Run error handling example
 ```
 
 ### Code Style & Quality
@@ -460,8 +431,6 @@ make lint
 | File               | Purpose                                      |
 | ------------------ | -------------------------------------------- |
 | `pyproject.toml`   | Project metadata, dependencies, build config |
-| `.env`             | Environment variables (not in git)           |
-| `.env.example`     | Template for environment variables           |
 | `config.dev.json`  | Development environment addresses            |
 | `config.prod.json` | Production environment addresses             |
 
@@ -591,9 +560,7 @@ The project includes comprehensive documentation in the `docs/` directory:
 - [**Market Maker SDK API Reference**](docs/market_maker_sdk_references.md) - RPQ and Web3 client APIs
 - [**Cross-Chain Access SDK API Reference**](docs/cross_chain_access_sdk_references.md) - API client specifications
 
-#### Examples
-
-- [**Examples README**](examples/README.md) - Guide to all code examples
+For working code examples, visit the **[Examples Repository](https://github.com/SwarmMarkets/python-swarm-sdks-examples)**.
 
 ### Documentation Structure
 
@@ -609,30 +576,7 @@ Each SDK has two documentation files:
 - **Getting Started**: Start with [Trading SDK User Guide](docs/trading_sdk_doc.md)
 - **Advanced Features**: Check individual SDK user guides
 - **Technical Details**: Refer to API reference documents
-- **Code Examples**: See [examples/](examples/) directory
-
----
-
-## 💡 Examples
-
-The project includes comprehensive working examples for all SDKs in the `examples/` directory.
-
-### Running Examples
-
-```bash
-# Using Makefile (recommended)
-make example-trading              # Trading SDK with smart routing
-make example-market-maker         # Market Maker P2P trading
-make example-cross-chain-access   # Cross-Chain Access stock trading
-make example-errors               # Error handling patterns
-
-# Or run directly
-python examples/example_trading.py
-```
-
-⚠️ **Note**: Examples require a `.env` file with credentials. See [Environment Configuration](#environment-configuration) section.
-
-📖 **Full documentation**: [examples/README.md](examples/README.md)
+- **Code Examples**: Visit the **[Examples Repository](https://github.com/SwarmMarkets/python-swarm-sdks-examples)**
 
 ---
 
@@ -842,7 +786,7 @@ limitations under the License.
 ## 💬 Support
 
 - 📚 **Documentation**: [docs/](docs/)
-- 💡 **Examples**: [examples/](examples/)
+- 💡 **Examples**: [Examples Repository](https://github.com/SwarmMarkets/python-swarm-sdks-examples)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/SwarmMarkets/python-swarm-sdks/issues)
 - 📧 **Email**: developers@swarm.com
 
